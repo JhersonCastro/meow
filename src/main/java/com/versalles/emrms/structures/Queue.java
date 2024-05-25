@@ -1,6 +1,10 @@
 package com.versalles.emrms.structures;
 
+import com.versalles.emrms.models.Appointment;
+import com.versalles.emrms.utils.Searching;
+
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -100,8 +104,9 @@ public class Queue<T> implements ListInterface<T>, Iterable<T>, Serializable {
 
     @Override
     public T remove(int index) {
-        throw new UnsupportedOperationException("Remove at index is not supported in Queue");
+        return null;
     }
+
 
     public T peek() {
         if (front == null) {

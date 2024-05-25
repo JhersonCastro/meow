@@ -66,6 +66,15 @@ public class SimpleLinkedList<T> implements ListInterface<T>, Serializable, Iter
     }
 
     @Override
+    public String toString() {
+        String theLabel = "";
+        for (int i = 0; i<this.size(); i++){
+            theLabel += this.get(i).toString();
+        }
+        return theLabel;
+    }
+
+    @Override
     public T remove(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index out of bounds");

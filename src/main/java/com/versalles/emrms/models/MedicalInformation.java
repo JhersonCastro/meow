@@ -2,6 +2,7 @@ package com.versalles.emrms.models;
 
 import java.io.Serializable;
 import com.versalles.emrms.structures.DoublyLinkedList;
+import com.versalles.emrms.structures.ListInterface;
 
 /**
  *
@@ -15,7 +16,14 @@ public class MedicalInformation implements Serializable {
     private String diagnosis;
     private String treatment;
     private String notes;
+
+
+
     private DoublyLinkedList<String> medicalHistory;
+
+
+
+
     private DoublyLinkedList<String> currentMedications;
 
     public MedicalInformation(String patientId, String diagnosis, String treatment, String notes) {
@@ -26,7 +34,13 @@ public class MedicalInformation implements Serializable {
         this.medicalHistory = new DoublyLinkedList<>();
         this.currentMedications = new DoublyLinkedList<>();
     }
+    public void setCurrentMedications(DoublyLinkedList<String> currentMedications) {
+        this.currentMedications = currentMedications;
+    }
 
+    public void setMedicalHistory(DoublyLinkedList<String> medicalHistory) {
+        this.medicalHistory = medicalHistory;
+    }
     public String getPatientId() {
         return patientId;
     }

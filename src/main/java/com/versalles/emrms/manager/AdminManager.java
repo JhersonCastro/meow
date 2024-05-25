@@ -1,11 +1,16 @@
 package com.versalles.emrms.manager;
 
+import com.versalles.emrms.Exceptions.UserDoesntExist;
 import com.versalles.emrms.models.Doctor;
 import com.versalles.emrms.models.Patient;
 import com.versalles.emrms.structures.CircularList;
 import com.versalles.emrms.structures.DoublyLinkedList;
 import com.versalles.emrms.utils.DataPersistence;
 import com.versalles.emrms.utils.ReadableDataPersistence;
+import com.versalles.emrms.utils.Searching;
+
+import javax.swing.*;
+import java.util.Comparator;
 
 /**
  *
@@ -32,14 +37,14 @@ public class AdminManager {
         }
     }
 
-    public void deleteDoctor(String doctorId) {
+    public void deleteDoctor(String doctorId) throws UserDoesntExist {
         int index = findDoctorIndexById(doctorId);
         if (index != -1) {
             doctorList.remove(index);
             DataPersistence.deleteDoctor(doctorId);
             ReadableDataPersistence.deleteDoctor(doctorId);
         } else {
-            System.out.println("Doctor not found.");
+            throw new UserDoesntExist("doctor");
         }
     }
 
@@ -54,24 +59,25 @@ public class AdminManager {
         }
     }
 
-    public void deletePatient(String patientId) {
+    public void deletePatient(String patientId) throws UserDoesntExist {
         int index = findPatientIndexById(patientId);
         if (index != -1) {
             patientList.remove(index);
             DataPersistence.deletePatient(patientId);
             ReadableDataPersistence.deletePatient(patientId);
         } else {
-            System.out.println("Patient not found.");
+            throw new UserDoesntExist("patient");
         }
     }
 
-    public void updatePassword(String userId, String newPassword) {
+    public void updatePassword(String userId, String newPassword) throws UserDoesntExist {
         int doctorIndex = findDoctorIndexById(userId);
         if (doctorIndex != -1) {
             Doctor doctor = doctorList.get(doctorIndex);
             doctor.setPassword(newPassword);
             DataPersistence.saveDoctor(doctor);
             ReadableDataPersistence.saveDoctor(doctor);
+            JOptionPane.showMessageDialog(null, "Successfully updated password by the doctor.", "Updated Password", JOptionPane.INFORMATION_MESSAGE);
         } else {
             int patientIndex = findPatientIndexById(userId);
             if (patientIndex != -1) {
@@ -79,8 +85,9 @@ public class AdminManager {
                 patient.setPassword(newPassword);
                 DataPersistence.savePatient(patient);
                 ReadableDataPersistence.savePatient(patient);
+                JOptionPane.showMessageDialog(null, "Successfully updated password by the patient.", "Updated Password", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                System.out.println("User not found.");
+                throw new UserDoesntExist("user");
             }
         }
     }

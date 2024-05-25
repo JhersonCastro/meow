@@ -33,6 +33,8 @@ public class Patient extends User implements Serializable {
         this.redoStack = new Stack<>();
     }
 
+
+
     public int getAge() {
         return age;
     }
@@ -50,6 +52,10 @@ public class Patient extends User implements Serializable {
 
     public void addAppointment(Appointment appointment) {
         this.appointments.add(appointment);
+        if(undoStack == null)
+            undoStack = new Stack<>();
+        if(redoStack == null)
+            redoStack = new Stack<>();
         undoStack.push(new UndoRedoAction("Add appointment", null, appointment));
         redoStack.clear();
     }
@@ -168,17 +174,5 @@ public class Patient extends User implements Serializable {
         }
     }
 
-    @Override
-    public void displayMenu() {
-        System.out.println("Patient Menu:");
-        System.out.println("1. View Personal Information");
-        System.out.println("2. Request Appointment");
-        System.out.println("3. Cancel Appointment");
-        System.out.println("4. View Upcoming Appointments");
-        System.out.println("5. View Medical History");
-        System.out.println("6. Update Contact Information");
-        System.out.println("7. Undo Last Action");
-        System.out.println("8. Redo Last Action");
-        System.out.println("9. Exit");
-    }
+
 }

@@ -1,5 +1,6 @@
 package com.versalles.emrms;
 
+import com.versalles.emrms.UI.Admin;
 import com.versalles.emrms.UI.LoginForm;
 
 import javax.swing.*;

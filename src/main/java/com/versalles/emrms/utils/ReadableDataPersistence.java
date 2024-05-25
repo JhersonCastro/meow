@@ -45,8 +45,8 @@ public class ReadableDataPersistence {
             out.println("-------------");
             for (int i = 0; i < doctor.getAppointments().size(); i++) {
                 Appointment appointment = doctor.getAppointments().get(i);
-                out.println((i + 1) + ". Appointment ID: " + appointment.getAppointmentId() + "  Date: " + appointment.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                        + "  Time: " + appointment.getDateTime().format(DateTimeFormatter.ofPattern("HH:mm")) + "  Patient ID: " + appointment.getPatientId()
+                out.println((i + 1) + ". Appointment ID: " + appointment.getAppointmentId() + "  Date: " + appointment.getDateTime()
+                        + "  Time: " + appointment.getDateTime() + "  Patient ID: " + appointment.getPatientId()
                         + "  Notes: " + appointment.getNotes());
             }
         } catch (IOException e) {
@@ -69,8 +69,8 @@ public class ReadableDataPersistence {
             out.println("-------------");
             for (int i = 0; i < patient.getAppointments().size(); i++) {
                 Appointment appointment = patient.getAppointments().get(i);
-                out.println((i + 1) + ". Appointment ID: " + appointment.getAppointmentId() + "  Date: " + appointment.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                        + "  Time: " + appointment.getDateTime().format(DateTimeFormatter.ofPattern("HH:mm")) + "  Doctor ID: " + appointment.getDoctorId()
+                out.println((i + 1) + ". Appointment ID: " + appointment.getAppointmentId() + "  Date: " + appointment.getDateTime()
+                        + "  Time: " + appointment.getDateTime() + "  Doctor ID: " + appointment.getDoctorId()
                         + "  Notes: " + appointment.getNotes());
             }
             out.println();
@@ -141,7 +141,7 @@ public class ReadableDataPersistence {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             for (int i = 0; i < appointments.size(); i++) {
                 Appointment appointment = appointments.get(i);
-                out.println((i + 1) + ". Appointment ID: " + appointment.getAppointmentId() + "  Date: " + appointment.getDateTime().format(formatter)
+                out.println((i + 1) + ". Appointment ID: " + appointment.getAppointmentId() + "  Date: " + appointment.getDateTime()
                         + "  Patient ID: " + appointment.getPatientId() + "  Doctor ID: " + appointment.getDoctorId() + "  Notes: " + appointment.getNotes());
             }
         } catch (IOException e) {

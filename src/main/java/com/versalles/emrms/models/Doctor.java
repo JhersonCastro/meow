@@ -1,10 +1,14 @@
 package com.versalles.emrms.models;
 
+import com.versalles.emrms.Exceptions.UserDoesntExist;
 import com.versalles.emrms.history.AppointmentHistory;
 import java.io.Serializable;
+import java.util.Comparator;
+
 import com.versalles.emrms.structures.CircularList;
 import com.versalles.emrms.structures.Queue;
 import com.versalles.emrms.structures.Stack;
+import com.versalles.emrms.utils.Searching;
 import com.versalles.emrms.utils.UndoRedoAction;
 
 /**
@@ -49,6 +53,10 @@ public class Doctor extends User implements Serializable {
 
     public void addPatient(Patient patient) {
         this.patients.add(patient);
+        if (undoStack == null)
+            undoStack = new Stack<>();
+        if(redoStack == null)
+            redoStack = new Stack<>();
         undoStack.push(new UndoRedoAction("Add patient", null, patient));
         redoStack.clear();
     }
@@ -70,19 +78,20 @@ public class Doctor extends User implements Serializable {
 
     public void addAppointment(Appointment appointment) {
         this.appointments.enqueue(appointment);
+        if(undoStack == null)
+            undoStack = new Stack<>();
+        if(redoStack == null)
+            redoStack = new Stack<>();
         undoStack.push(new UndoRedoAction("Add appointment", null, appointment));
         redoStack.clear();
     }
 
-    public void removeAppointment(Appointment appointment) {
-        for (int i = 0; i < appointments.size(); i++) {
-            if (appointments.get(i).equals(appointment)) {
-                appointments.dequeue();
-                undoStack.push(new UndoRedoAction("Remove appointment", appointment, null));
-                redoStack.clear();
-                break;
-            }
-        }
+    public void removeAppointment(Appointment appointment) throws UserDoesntExist {
+        boolean checker = appointments.remove(appointment);
+        if(!checker) throw new UserDoesntExist("appointment");
+
+        undoStack.push(new UndoRedoAction("Remove appointment", appointment, null));
+        redoStack.clear();
     }
 
     public AppointmentHistory getAppointmentHistory() {
@@ -165,22 +174,15 @@ public class Doctor extends User implements Serializable {
                 System.out.println("Unknown action type: " + action.getActionType());
         }
     }
+    public Stack<UndoRedoAction> getUndoStack() {
+        if(undoStack ==null)
+            undoStack = new Stack<>();
+        return undoStack;
+    }
 
-    @Override
-    public void displayMenu() {
-        System.out.println("Doctor Menu:");
-        System.out.println("1. Register New Patient");
-        System.out.println("2. Update Patient Record");
-        System.out.println("3. Delete Patient");
-        System.out.println("4. View Patient List");
-        System.out.println("5. Search Patient");
-        System.out.println("6. Manage Appointments");
-        System.out.println("7. View Change History");
-        System.out.println("8. Sort Patients");
-        System.out.println("9. Update Personal Information");
-        System.out.println("10. View/Update Medical Information");
-        System.out.println("11. Undo Last Action");
-        System.out.println("12. Redo Last Action");
-        System.out.println("13. Exit");
+    public Stack<UndoRedoAction> getRedoStack() {
+        if(redoStack ==null)
+            redoStack = new Stack<>();
+        return redoStack;
     }
 }

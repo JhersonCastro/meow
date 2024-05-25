@@ -131,8 +131,7 @@ public class DataPersistence {
         }
         return appointments;
     }
-
-    public static MyHashMap<String, String> loadAllCredentials() {
+    public  static MyHashMap<String, String> loadAllCredentials(){
         MyHashMap<String, String> credentials = new MyHashMap<>();
 
         File[] doctorFiles = new File(DOCTORS_DIR).listFiles();
@@ -146,6 +145,37 @@ public class DataPersistence {
                 }
             }
         }
+        File[] patientFiles = new File(PATIENTS_DIR).listFiles();
+        if (patientFiles != null) {
+            for (File file : patientFiles) {
+                if (file.isFile() && file.getName().endsWith(".ser")) {
+                    Patient patient = loadPatient(file.getName().replace(".ser", ""));
+                    if (patient != null) {
+                        credentials.put(patient.getId(), patient.getPassword());
+                    }
+                }
+            }
+        }
+        return credentials;
+    }
+    public static MyHashMap<String, String> loadAllCredentialsDoctor() {
+        MyHashMap<String, String> credentials = new MyHashMap<>();
+
+        File[] doctorFiles = new File(DOCTORS_DIR).listFiles();
+        if (doctorFiles != null) {
+            for (File file : doctorFiles) {
+                if (file.isFile() && file.getName().endsWith(".ser")) {
+                    Doctor doctor = loadDoctor(file.getName().replace(".ser", ""));
+                    if (doctor != null) {
+                        credentials.put(doctor.getId(), doctor.getPassword());
+                    }
+                }
+            }
+        }
+        return credentials;
+    }
+    public static MyHashMap<String, String> loadAllCredentialsPatient() {
+        MyHashMap<String, String> credentials = new MyHashMap<>();
 
         File[] patientFiles = new File(PATIENTS_DIR).listFiles();
         if (patientFiles != null) {
@@ -158,7 +188,6 @@ public class DataPersistence {
                 }
             }
         }
-
         return credentials;
     }
 

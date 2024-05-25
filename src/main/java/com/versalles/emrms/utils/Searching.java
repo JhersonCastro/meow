@@ -1,5 +1,6 @@
 package com.versalles.emrms.utils;
 
+import java.util.Collection;
 import java.util.Comparator;
 import com.versalles.emrms.structures.ListInterface;
 
@@ -13,6 +14,7 @@ public class Searching {
         if (list.size() < 20) {
             return linearSearch(list, key, comparator);
         } else {
+            Sorting.sort(list, comparator);
             return binarySearch(list, key, comparator);
         }
     }

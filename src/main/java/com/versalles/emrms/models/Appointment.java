@@ -11,13 +11,32 @@ public class Appointment implements Serializable, Comparable<Appointment> {
 
     private static final long serialVersionUID = 1L;
 
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
     private String appointmentId;
     private String patientId;
     private String doctorId;
-    private LocalDateTime dateTime;
+    private String dateTime;
     private String notes;
 
-    public Appointment(String appointmentId, String patientId, String doctorId, LocalDateTime dateTime, String notes) {
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "appointmentId='" + appointmentId + '\'' +
+                ", patientId='" + patientId + '\'' +
+                ", doctorId='" + doctorId + '\'' +
+                ", dateTime=" + dateTime +
+                ", notes='" + notes + '\'' +
+                '}';
+    }
+
+    public Appointment(String appointmentId, String patientId, String doctorId, String dateTime, String notes) {
         this.appointmentId = appointmentId;
         this.patientId = patientId;
         this.doctorId = doctorId;
@@ -49,13 +68,7 @@ public class Appointment implements Serializable, Comparable<Appointment> {
         this.doctorId = doctorId;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
 
     public String getNotes() {
         return notes;
@@ -65,13 +78,7 @@ public class Appointment implements Serializable, Comparable<Appointment> {
         this.notes = notes;
     }
 
-    public String getDate() {
-        return dateTime.toLocalDate().toString();
-    }
 
-    public String getTime() {
-        return dateTime.toLocalTime().toString();
-    }
 
     public String getDescription() {
         return notes;
